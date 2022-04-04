@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pelanggan;
+use App\Models\Province;
 use Faker\Provider\ar_EG\Person;
 use Illuminate\Http\Request;
 
@@ -35,7 +36,7 @@ class PelangganController extends Controller
         //
         $data= [
             "kelamin" => $input["kelamin"] ?? "",
-            "daftarPelanggan"=>$dataPelanggan->get()
+            "daftarPelanggan"=>$dataPelanggan->paginate(10)
             ];
         return view('pelanggan.index', $data);
     }
@@ -48,7 +49,10 @@ class PelangganController extends Controller
     public function create()
     {
         //
-        return view('pelanggan.create');
+        $data = [
+            "provinces" => Province::all()
+        ];
+        return view('pelanggan.create',$data);
     }
 
     /**
@@ -59,13 +63,25 @@ class PelangganController extends Controller
      */
     public function store(Request $request)
     {
+
+        //melakukan validation
+    // $validate = $request->validate(
+    //     [
+    //         'name'=> 'required|min:5|max:100',
+    //         'kelamin'=>'required'
+    //     ]
+    // );
+
         //
         // $nama = $request->input("nama");
         // $nama = $request->input("alamt");
         // $nama = $request->input("phone");
     $input=$request->all();
        
+
+
     //untuk melakukan innsert data ke database
+    
         $pelanggan = new Pelanggan();
         $pelanggan->nama = $input['nama'];
         $pelanggan->kelamin = $input['kelamin'];
@@ -104,7 +120,8 @@ class PelangganController extends Controller
         //
         $data =[
             //SELECT * From pelanggan where id=$id
-            "pelanggan" => Pelanggan::find($id)
+            "pelanggan" => Pelanggan::find($id),
+            "provinces" => Province::all()
         ];
         return view('pelanggan.edit', $data);
     }

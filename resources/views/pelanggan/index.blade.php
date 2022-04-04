@@ -10,7 +10,7 @@
     </head>
 
 
-    
+<body>
 <h2>Daftar Pelanggan</h2>
 <form method="GET" action="/pelanggan">
 <input type="text" name="src"> <br> 
@@ -18,12 +18,13 @@
 
 </form>
 <div> <a href= "{{ route('pelanggan.create')}}">Tambah Pelanggan</a></div>
-<table style="bordered ">
+<table >
     <tr>
         <th>aksi</th>
         <th>Nama Pelanggan</th>
         <th>Kelamin</th>
         <th>No Telepon</th>
+        <th>Provinsi</th>
         <th>Alamat</th>
         </tr>
     @foreach  ($daftarPelanggan as $pelanggan)
@@ -41,9 +42,11 @@
         <td>{{ $pelanggan["nama"]}}</td>
         <td>{{$pelanggan["kelamin"] == "L"? "laki-laki" : "wanita"}}</td>
         <td>{{$pelanggan["phone"]}}</td>
+        <td>{{$pelanggan["province_name"]}}</td>
         <td>{{$pelanggan["alamat"]}}</td>
     </tr>
     @endforeach
+</table>
    @if( count ($daftarPelanggan)==0)
    <tr>
        <td colspan="5">
@@ -51,5 +54,7 @@
        </td>
    </tr>
    @endif
-</table>
+   {{ $daftarPelanggan->links() }}
+
+</body>
 </html>

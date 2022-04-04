@@ -12,6 +12,14 @@
     <label for="laki-laki">Laki-laki</label>
     <input type="radio"  id= "perempuan"name="kelamin" value="P" {{$pelanggan->kelamin == "P"? "checked" : ""}}>
     <label for="perempuan">Perempuan</label> <br>
+    provinsi : <select name="province_id" >
+        @foreach ($provinces as $province)
+
+        <option value="{{$province->id}}">{{$province->province_name}}</option>
+    
+    @endforeach
+    </select>
+    <br>
     ALamat <textarea name="alamat" >{{ $pelanggan->alamat }}</textarea>
     
     <input type="submit" name="submit">
